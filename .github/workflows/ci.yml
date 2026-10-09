@@ -2,18 +2,16 @@ name: Customer Churn Practical 2
 
 'on':
 push:
-branches:
-- main
+branches: [main]
 pull_request:
-branches:
-- main
+branches: [main]
 workflow_dispatch:
 
 jobs:
 train-and-test:
 runs-on: ubuntu-latest
 
-
+```
 steps:
   - name: Checkout repository
     uses: actions/checkout@v4
@@ -21,8 +19,7 @@ steps:
   - name: Set up Python
     uses: actions/setup-python@v5
     with:
-      python-version: '3.11'
-      cache: pip
+      python-version: "3.11"
 
   - name: Install dependencies
     run: |
@@ -42,3 +39,4 @@ steps:
       name: customer-churn-model-and-metrics
       path: artifacts/
       if-no-files-found: error
+```
