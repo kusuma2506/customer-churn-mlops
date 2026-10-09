@@ -12,6 +12,7 @@ train-and-test:
 runs-on: ubuntu-latest
 
 
+
 steps:
   - name: Checkout repository
     uses: actions/checkout@v4
@@ -39,4 +40,3 @@ steps:
       name: customer-churn-model-and-metrics
       path: artifacts/
       if-no-files-found: error
-
