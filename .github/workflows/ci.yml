@@ -1,40 +1,42 @@
 name: Customer Churn Practical 2
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
+push:
+branches: ["main"]
+pull_request:
+branches: ["main"]
+workflow_dispatch:
 
 jobs:
-  train-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+train-and-test:
+runs-on: ubuntu-latest
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-          cache: "pip"
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+steps:
+  - name: Checkout repository
+    uses: actions/checkout@v4
 
-      - name: Run unit tests
-        run: python -m unittest discover -v
+  - name: Set up Python
+    uses: actions/setup-python@v5
+    with:
+      python-version: "3.11"
+      cache: "pip"
 
-      - name: Train churn model
-        run: python train_model.py
+  - name: Install dependencies
+    run: |
+      python -m pip install --upgrade pip
+      python -m pip install -r requirements.txt
 
-      - name: Upload trained model and metrics
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: customer-churn-model-and-metrics
-          path: artifacts/
-          if-no-files-found: error
+  - name: Run unit tests
+    run: python -m unittest discover -v
+
+  - name: Train churn model
+    run: python train_model.py
+
+  - name: Upload model artifacts
+    if: success()
+    uses: actions/upload-artifact@v4
+    with:
+      name: customer-churn-model-and-metrics
+      path: artifacts/
+      if-no-files-found: error
